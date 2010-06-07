@@ -118,7 +118,19 @@ tracker_id (usually in an initializer) will apply to all other requests.
 See the documentation for the GoogleAnalytics class for other configuration
 options.
 
-Note: You will need to have the mocha gem installed to run the tests for this
-plugin.
+== For Developers
 
+You will need to have the mocha gem installed to run the tests for this plugin.
+  
+  $ sudo gem install mocha
+  $ rake test
+
+If you want test coverage, you need to install RCov
+
+  $ sudo gem install rcov
+  $ rake rcov
+  $ open coverage/index.html
+
+    
+  
 Copyright (c) 2006-2008 Rubaidh Ltd, released under the MIT license.

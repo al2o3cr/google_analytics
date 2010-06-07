@@ -2,7 +2,12 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 require 'rake/gempackagetask'
-require 'rcov/rcovtask'
+begin
+  require 'rcov/rcovtask'
+rescue LoadError
+  no_rcov = true
+end
+
 require 'rubyforge'
 
 desc 'Default: run unit tests.'
@@ -17,12 +22,13 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true
 end
 
-Rcov::RcovTask.new do |t|
-  t.test_files = FileList["test/**/*_test.rb"]
-  t.verbose = true
-  t.rcov_opts = ["-x", "^/"]
+unless no_rcov
+  Rcov::RcovTask.new do |t|
+    t.test_files = FileList["test/**/*_test.rb"]
+    t.verbose = true
+    t.rcov_opts = ["-x", "^/"]
+  end
 end
-
 desc 'Generate documentation for the google_analytics plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
