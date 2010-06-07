@@ -7,7 +7,6 @@ begin
 rescue LoadError
   no_rcov = true
 end
-
 require 'rubyforge'
 
 desc 'Default: run unit tests.'
@@ -29,6 +28,7 @@ unless no_rcov
     t.rcov_opts = ["-x", "^/"]
   end
 end
+
 desc 'Generate documentation for the google_analytics plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
@@ -38,11 +38,13 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-gem_spec = eval(File.read('google_analytics.gemspec'))
+begin
+  gem_spec = eval(File.read('google_analytics.gemspec'))
 
-Rake::GemPackageTask.new(gem_spec) do |p|
-  p.need_tar = false
-  p.need_zip = false
+  Rake::GemPackageTask.new(gem_spec) do |p|
+    p.need_tar = false
+    p.need_zip = false
+  end
 end
 
 desc 'Package and upload the release to rubyforge.'
